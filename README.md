@@ -90,7 +90,7 @@ To run the project on Minikube, make sure you have Minikube, Docker and kubectl 
 The application includes exception handling for several types of errors to provide a better user experience and give
 appropriate responses to requests. The following exceptions are handled:
 
-* InvalidDVDException - thrown when an attempt is made to add or update a DVD with invalid information. The response for this exception is a 400 Bad Request status code along with an error message indicating the cause of the exception.
+* InvalidDVDException - This exception is thrown when an attempt is made to add or update a DVD with invalid information. The response for this exception is a 400 Bad Request status code along with an error message indicating the cause of the exception.
 * DuplicateResourceException - This exception is thrown when an attempt is made to add a DVD or a user with an email  that already exists in the database. The response for this exception is a 400 Bad Request status code along with an  error message indicating that the resource already exists.
 * DvdNotFoundException - This exception is thrown when a requested DVD is not found in the database. The response for this exception is a 404 Not Found status code along with an error message indicating that the DVD does not exist.
 * BadCredentialsException - This exception is thrown when a user provides incorrect login credentials. The response for this exception is a 401 Unauthorized status code along with an error message indicating that the credentials are invalid.
