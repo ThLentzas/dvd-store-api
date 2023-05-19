@@ -4,8 +4,6 @@ This is a Java Spring Boot application that provides a simple Restful API servic
 
 # Features
 * User registration and login with JWT authentication
-* Password encryption using BCrypt
-* Role-based authorization with Spring Security
 * Caching of DVD data with Redis
 * HATEOAS
 * Docker support
