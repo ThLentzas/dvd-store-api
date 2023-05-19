@@ -46,7 +46,7 @@ You will need to have the following installed on your machine:
 
 To build and run the project, follow these steps:
 
-* Clone the repository to your local machine: https://github.com/ThLentzas/dvd-store-service.git
+* Clone the repository to your local machine: https://github.com/ThLentzas/dvd-store-api.git
 * Navigate to the project directory
 * Build the project: `mvn clean install -DskipTests`
 * Run the project: `mvn spring-boot:run`
@@ -55,20 +55,20 @@ To build and run the project, follow these steps:
 To run the project on Docker, make sure you have Docker installed on your machine.
 
 ### Option 1: Manual Docker Build
-* Clone the repository to your local machine: https://github.com/ThLentzas/dvd-store-service.git
+* Clone the repository to your local machine: https://github.com/ThLentzas/dvd-store-api.git
 * Navigate to the `scripts` folder in the`docker` directory.
 * Run the `build.bat` file.This will create a Docker image for the application: `./build.bat`
 * Start the containers(dvd-store, psql, redis) by running the `start.bat` file: `./start.bat`
 * Stop the containers and remove them along with the images,networks and volumes by running the `stop.bat` file: `./stop.bat`
 
 ### Option 2: Docker Compose
-* Clone the repository to your local machine: https://github.com/ThLentzas/dvd-store-service.git
+* Clone the repository to your local machine: https://github.com/ThLentzas/dvd-store-api.git
 * Navigate to the `docker` directory
 * Start the containers by running the Docker Compose file: `docker-compose up`
 
 ## Kubernetes
 To run the project on Minikube, make sure you have Minikube, Docker and kubectl installed on your machine.
-* Clone the repository to your local machine: https://github.com/ThLentzas/dvd-store-service.git
+* Clone the repository to your local machine: https://github.com/ThLentzas/dvd-store-api.git
 * Navigate to the `scripts` folder in the `kubernetes` directory
 * Run the `setup.bat` file 
 * Get the minikube IP address.
