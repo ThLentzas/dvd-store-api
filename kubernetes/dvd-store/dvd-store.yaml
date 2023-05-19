@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dvd-store
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dvd-store
+  template:
+    metadata:
+      labels:
+        app: dvd-store
+    spec:
+      containers:
+        - name: dvd-store
+          image: thlentzas/dvd-store:latest
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: dvd-store-config
+                  key: SPRING_PROFILES_ACTIVE
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: dvd-store-config
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: dvd-store-config
+                  key: DB_PORT
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: dvd-store-config
+                  key: DB_NAME
+            - name: DB_DRIVER
+              valueFrom:
+                configMapKeyRef:
+                  name: dvd-store-config
+                  key: DB_DRIVER
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: dvd-store-config
+                  key: REDIS_HOST
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: dvd-store-config
+                  key: REDIS_PORT
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: dvd-store-secret
+                  key: DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dvd-store-secret
+                  key: DB_PASSWORD
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "100m"
+            limits:
+              memory: "1024Mi"
+              cpu: "2000m"
+      volumes:
+        - name: config
+          configMap:
+            name: dvd-store-config
+        - name: secret
+          secret:
+            secretName: dvd-store-secret

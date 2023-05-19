@@ -1,0 +1,91 @@
+version: "3.8"
+services:
+  postgres:
+    image: "postgres:15.2-alpine"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d dvd_store -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 40s
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4096M
+        reservations:
+          cpus: '1.0'
+          memory: 2048M
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    env_file:
+      - ./env/psql.env
+    networks:
+      - dvd-net
+
+  redis:
+    image: "redis:7.0.10-alpine"
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 40s
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4096M
+        reservations:
+          cpus: '1.0'
+          memory: 2048M
+    networks:
+      - dvd-net
+
+  dvd_store:
+    build:
+      context: ../
+      dockerfile: /docker/Dockerfile
+    ports:
+      - "8080:8080"
+    env_file:
+      - env/dvd-store.env
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1024M
+        reservations:
+          cpus: '0.50'
+          memory: 512M
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 40s
+    networks:
+      - dvd-net
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+networks:
+  dvd-net: {}
+volumes:
+  pgdata: {}

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dvd-store-config
+data:
+  SPRING_PROFILES_ACTIVE: "docker"
+  DB_HOST: "psql.default"
+  DB_PORT: "5432"
+  DB_NAME: "dvd_store"
+  DB_DRIVER: "org.postgresql.Driver"
+  REDIS_HOST: "redis.default"
+  REDIS_PORT: "6379"
