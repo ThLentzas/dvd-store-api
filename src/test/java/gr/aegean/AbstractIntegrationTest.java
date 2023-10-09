@@ -3,7 +3,6 @@ package gr.aegean;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -23,8 +22,6 @@ public abstract class AbstractIntegrationTest {
     private UserRepository userRepository;
     @Autowired
     private DvdRepository dvdRepository;
-    @LocalServerPort
-    protected int port;
 
     protected static final PostgreSQLContainer<?> postgreSQLContainer =
             new PostgreSQLContainer<>("postgres:15.2-alpine")

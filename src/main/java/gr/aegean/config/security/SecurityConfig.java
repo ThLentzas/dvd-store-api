@@ -2,6 +2,7 @@ package gr.aegean.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
@@ -25,7 +26,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers( "/api/v1/auth/**").permitAll();
+                    auth.requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll();
                     auth.requestMatchers("/api/v1/dvds/**").hasAuthority("ROLE_EMPLOYEE");
                 })
                 .csrf(AbstractHttpConfigurer:: disable)

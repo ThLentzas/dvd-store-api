@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -314,6 +315,7 @@ class DvdIT extends AbstractIntegrationTest {
         assertThat(result.getResponseBody().quantity()).isEqualTo(3);
 
         String title = "Lord";
+
         webTestClient.get()
                 .uri(DVDS_PATH + "?title={title}", title)
                 .accept(MediaType.APPLICATION_JSON)
