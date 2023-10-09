@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: ${DB_DRIVER}
+    hikari:
+      schema: public
+      connection-timeout: 20000
+      maximum-pool-size: 5
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      jedis:
+        pool:
+          max-active: 10
+          max-idle: 5
+          min-idle: 2
+  flyway:
+    baseline-on-migrate: true
+    enabled: true
+    user: ${DB_USER}
+    password: ${DB_PASSWORD}
+    baseline-description: "init"
+    baseline-version: 0
+    locations: classpath:db/migration
