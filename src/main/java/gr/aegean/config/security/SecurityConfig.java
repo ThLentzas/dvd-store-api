@@ -27,6 +27,12 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll();
+                    /*
+                        In "/api/v1/dvds/**" => ** represents zero or more directories. In the case of the request
+                        "/api/v1/dvds?title=title" we have 0 subdirectories, so it works. It doesn't mean anything
+                        after '/' in that case "/api/v1/dvds?title=title" would fail cause there is no '/' after
+                        dvds
+                     */
                     auth.requestMatchers("/api/v1/dvds/**").hasAuthority("ROLE_EMPLOYEE");
                 })
                 .csrf(AbstractHttpConfigurer:: disable)
