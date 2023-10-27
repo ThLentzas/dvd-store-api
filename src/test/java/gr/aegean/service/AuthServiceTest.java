@@ -1,6 +1,5 @@
 package gr.aegean.service;
 
-import gr.aegean.exception.UnauthorizedException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,6 +24,7 @@ import gr.aegean.model.user.UserRole;
 import gr.aegean.model.dto.auth.AuthResponse;
 import gr.aegean.model.dto.auth.RegisterRequest;
 import gr.aegean.model.dto.auth.LoginRequest;
+import gr.aegean.exception.UnauthorizedException;
 
 
 @ExtendWith(MockitoExtension.class)

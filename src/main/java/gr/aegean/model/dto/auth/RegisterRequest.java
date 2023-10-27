@@ -1,9 +1,9 @@
 package gr.aegean.model.dto.auth;
 
-import gr.aegean.model.user.UserRole;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
+import gr.aegean.model.user.UserRole;
 
 
 public record RegisterRequest(

@@ -8,12 +8,11 @@ import gr.aegean.entity.User;
 import gr.aegean.mapper.UserRowMapper;
 import gr.aegean.model.user.UserRole;
 
-import org.junit.jupiter.api.BeforeEach;
-
-import org.junit.jupiter.api.Test;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 
 class UserRowMapperTest {
@@ -26,9 +25,9 @@ class UserRowMapperTest {
 
     @Test
     void shouldMapRowToUser() throws SQLException {
-        try(ResultSet resultSet = mock(ResultSet.class)) {
+        try (ResultSet resultSet = mock(ResultSet.class)) {
             // Arrange
-            User expected =new User(
+            User expected = new User(
                     1,
                     "Test",
                     "Test",

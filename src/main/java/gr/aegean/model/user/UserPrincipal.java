@@ -1,12 +1,13 @@
 package gr.aegean.model.user;
 
-import gr.aegean.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+
+import gr.aegean.entity.User;
 
 
 public record UserPrincipal(User user) implements UserDetails {

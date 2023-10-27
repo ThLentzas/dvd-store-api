@@ -1,11 +1,7 @@
 package gr.aegean.controller;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -40,6 +36,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -187,10 +184,40 @@ class DvdControllerTest {
         verifyNoInteractions(dvdService);
     }
 
+    @Test
+    @WithMockUser(username = "test", roles = "EMPLOYEE")
+    void shouldReturnHTTP400WhenTitleExceedsMaxLength() throws Exception {
+        String titleValue = RandomStringUtils.randomAlphabetic(101);
+        String requestBody = String.format("""
+                {
+                    "title": "%s",
+                    "genre": "ADVENTURE",
+                    "quantity": 5
+                }
+                """, titleValue);
+        String responseBody = """
+                {
+                    "message": "Invalid title. Title must not exceed 100 characters",
+                    "statusCode": 400
+                }
+                """;
+
+        mockMvc.perform(post(DVD_PATH)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody)
+                        .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON))
+                .andExpectAll(
+                        status().isBadRequest(),
+                        content().json(responseBody)
+                );
+
+        verifyNoInteractions(dvdService);
+    }
+
     @ParameterizedTest
     @ValueSource(ints = {-1, 0})
     @WithMockUser(username = "test", roles = "EMPLOYEE")
-    void shouldReturnHTTP400WhenQuantityIsNegativeOrZero(Integer quantity) throws Exception {
+    void shouldReturnHTTP400WhenQuantityIsNegativeOrZeroForDvdCreateRequest(Integer quantity) throws Exception {
         String requestBody = String.format("""
                 {
                     "title": "Lord of the Rings: The Fellowship of the Ring",
@@ -263,6 +290,33 @@ class DvdControllerTest {
                         .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON))
                 .andExpectAll(
                         status().isOk(),
+                        content().json(responseBody)
+                );
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {-1, 0})
+    @WithMockUser(username = "test", roles = "EMPLOYEE")
+    void shouldReturnHTTP400WhenQuantityIsNegativeOrZeroForDvdUpdateRequest(Integer quantity) throws Exception {
+        String requestBody = String.format("""
+                {
+                    "quantity": %d,
+                    "genre": "SCIENCE_FICTION"
+                }
+                """, quantity);
+        String responseBody = """
+                {
+                    "message": "The quantity must be a positive number",
+                    "statusCode": 400
+                }
+                """;
+
+        mockMvc.perform(put(DVD_PATH + '/' + "{dvdId}", UUID.randomUUID().toString())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody)
+                        .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON))
+                .andExpectAll(
+                        status().isBadRequest(),
                         content().json(responseBody)
                 );
     }

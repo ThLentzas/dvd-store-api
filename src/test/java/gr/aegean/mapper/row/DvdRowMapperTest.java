@@ -26,7 +26,7 @@ class DvdRowMapperTest {
 
     @Test
     void shouldMapRowToDvd() throws SQLException {
-        try(ResultSet resultSet = mock(ResultSet.class)) {
+        try (ResultSet resultSet = mock(ResultSet.class)) {
             //Arrange
             UUID id = UUID.randomUUID();
             Dvd expected = new Dvd(id, "Inception", DvdGenre.SCIENCE_FICTION, 3);

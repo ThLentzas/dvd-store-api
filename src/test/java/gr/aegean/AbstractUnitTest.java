@@ -1,7 +1,5 @@
 package gr.aegean;
 
-import com.zaxxer.hikari.HikariDataSource;
-import gr.aegean.entity.Dvd;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -18,6 +16,11 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import javax.sql.DataSource;
+
+import gr.aegean.entity.Dvd;
+
+import com.zaxxer.hikari.HikariDataSource;
+
 
 @Testcontainers
 public abstract class AbstractUnitTest {

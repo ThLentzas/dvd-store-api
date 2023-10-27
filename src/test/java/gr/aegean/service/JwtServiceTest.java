@@ -67,19 +67,19 @@ class JwtServiceTest {
                 "alg", "RS256",
                 "typ", "JWT");
 
-        Jwt jwt = new Jwt(
+        Jwt expected = new Jwt(
                 jwtToken,
                 claims.getIssuedAt(),
                 claims.getExpiresAt(),
                 headers,
                 claims.getClaims());
 
-        when(jwtEncoder.encode(any(JwtEncoderParameters.class))).thenReturn(jwt);
+        when(jwtEncoder.encode(any(JwtEncoderParameters.class))).thenReturn(expected);
 
         //Act
         String actual = underTest.assignToken(userPrincipal);
 
         //Assert
-        assertThat(actual).isEqualTo(jwt.getTokenValue());
+        assertThat(actual).isEqualTo(expected.getTokenValue());
     }
 }
